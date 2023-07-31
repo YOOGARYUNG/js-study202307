@@ -1,0 +1,55 @@
+/*
+const increase = (() => {
+    let count = 0;
+    return () => ++count;
+})();
+
+const dncrease = (() => {
+    let count = 0;
+    return () => --count;
+})();
+
+console.log(increase());    // 1
+console.log(decrease());    // 0
+console.log(decrease());    // -1
+console.log(increase());    //  0
+console.log(increase());    // 1
+*/
+
+/*
+const countClosure = () => {
+    let count = 0;
+
+    const increase = () => ++count;
+    const decrease = () => --count;
+
+    return {
+        increase: increase,
+        decrease: decrease
+    };
+};
+
+const counter = countClosure();
+
+console.log(counter.increase());
+console.log(counter.decrease());
+console.log(counter.decrease());
+console.log(counter.increase());
+console.log(counter.increase());
+*/
+
+const { increase, decrease } = (() => {
+    let count = 0;
+    return {
+        increase: () => ++count,
+        decrease: () => --count
+    };
+})();
+
+console.log(increase());
+console.log(decrease());
+console.log(increase());
+console.log(increase());
+console.log(decrease());
+console.log(increase());
+
