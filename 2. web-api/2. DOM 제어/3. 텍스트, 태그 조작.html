@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #greet span {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="greet">
+        Hello <span class="hilight">World!</span>
+    </div>
+
+    <ul id="food-items">
+        <li class="food">짜장면</li>
+        <li class="food">볶음밥</li>
+        <li class="food">파스타</li>
+    </ul>
+
+    <script>
+        const $greet = document.getElementById('greet');
+
+        console.log($greet.textContent.trim()); // trim() 앞뒤 공백 제거
+        console.log($greet.innerHTML);
+
+        $greet.textContent = 'Hello Javascript!'    // 인라인태그들은 다 사라짐
+        // $greet.firstElementChild.textContent = 'Javascript' 
+        $greet.innerHTML = 'Hello <span>Javascript!</span>' // 태그와 함께 조작해야한다면 innerHTML사용
+
+        const $foods = document.getElementById('food-items');
+
+        // 태그 바꿈
+        $foods.lastElementChild.textContent = '마카로니';
+
+        // 태그 추가
+        $foods.innerHTML += '<li class="food">족발</li>'
+        
+        // 자식태그를 전체 삭제
+        // $foods.innerHTML = '';
+
+    </script>
+</body>
+</html>
