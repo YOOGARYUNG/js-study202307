@@ -42,6 +42,7 @@ const renderToLog = ({operation, prevResult: firstNumber, number: secondNumber, 
     $newLi.classList.add('log-entries__item');
     $newLi.textContent = `#${++seq}. ${firstNumber} ${convertOperationToMark(operation)} ${secondNumber} = ${result}`;
 
+
     // ul에 추가
     $logEntries.appendChild($newLi);
 }
