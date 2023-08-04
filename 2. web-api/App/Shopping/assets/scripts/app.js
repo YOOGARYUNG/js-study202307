@@ -28,16 +28,22 @@ class Product {
 const p1 = new Product('냠냠이',
     'https://blog.kakaocdn.net/dn/cSGF4R/btq5h0PUbMx/9RgR2KxK5oEeT9ku9O2xW1/img.png',
     1000, '냠냠박사님~ 맛있게 밥을 먹어주세요');
-console.log(p1);
+// console.log(p1);
 const p2 = new Product('쩝쩝이',
     'https://blog.kakaocdn.net/dn/cSGF4R/btq5h0PUbMx/9RgR2KxK5oEeT9ku9O2xW1/img.png',
     7000, '쩝쩝박사님~ 맛있게 밥을 먹어주세요');
-console.log(p2);
+// console.log(p2);
 
 // 한개의 li태그를 생성하는 컴포넌트 클래서 설계
 class ProductItem {
     constructor (product) {
         this.product = product;
+    }
+    // 담기버튼 클릭 이벤트 핸들러
+    addToCartHandler () {
+        console.log('장바구니에 추가함!');
+        console.log(this);
+        // 이 핸들러에서 누른 그 상품의 정보를 알아야 한다.
     }
 
     render() {
@@ -54,51 +60,59 @@ class ProductItem {
               </div>
             </div>
           `;
-          return $prod;
+        const $addCartBtn =$prod.querySelector('button');
+        // $addCartBtn.addEventListener('click', this.addToCartHandler.bind(this));
+        $addCartBtn.addEventListener('click', () => this.addToCartHandler());
+        return $prod;
+    }
+}
+// 한개의 ul을 생성하는 클래스 
+class ProductList {
+    constructor() {
+        // 상품들을 모아놓은 배열
+        this.products = [
+            p1,
+            p2,
+            new Product(
+                '햄버거',
+                'https://images.chosun.com/resizer/5jStJ5InVS4u3iHvEzB8y_tGrr8=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/HV765ADF7VF4FLG5KISDNFMUJ4.PNG',
+                16900,
+                '꽈뜨로 맥씨멈 스테카 버거~'
+            ),
+            new Product(
+                '애플워치',
+                'https://img.danawa.com/prod_img/500000/535/481/img/15481535_1.jpg?_v=20211215103510',
+                400000,
+                'APPLE watch 2세대 2022'
+            ),
+            new Product(
+                '애플망고',
+                'https://mblogthumb-phinf.pstatic.net/MjAxODA3MTlfODYg/MDAxNTMxOTY2NzcwMjY0.X8ApKSVn-A4x3gCH2uN88j49_R8FjyEJsxVA27HEVUEg.BlIna4eJbLMf11z8GpSGz7_HmRm-kuYwmGqA8t9UF0gg.JPEG.julyhoho/image_2893740211531966758809.jpg?type=w800',
+                6000,
+                '달달한 AppleMango~'
+            ),
+        ]
+    }   // end constructor
+
+
+
+render() {
+    // console.log('render!!', this);
+    const $app = document.getElementById('app');
+    const $prodList = document.createElement('ul');
+    $prodList.classList.add('product-list');
+    this.products.forEach(prod => {
+        //      {product: {title: '', imageUrl: ''}, render()}
+      const productItem = new ProductItem(prod);
+    //   console.log(productItem);
+
+      $prodList.appendChild(productItem.render());
+    });
+    $app.appendChild($prodList);
     }
 }
 
 
-// 상품 목록에 대한 객체
-const productList = {
-    products: [
-        p1,
-        p2,
-        new Product(
-            '햄버거',
-            'https://images.chosun.com/resizer/5jStJ5InVS4u3iHvEzB8y_tGrr8=/616x0/smart/cloudfront-ap-northeast-1.images.arcpublishing.com/chosun/HV765ADF7VF4FLG5KISDNFMUJ4.PNG',
-            16900,
-            '꽈뜨로 맥씨멈 스테카 버거~'
-        ),
-        new Product(
-            '애플워치',
-            'https://img.danawa.com/prod_img/500000/535/481/img/15481535_1.jpg?_v=20211215103510',
-            400000,
-            'APPLE watch 2세대 2022'
-        ),
-        new Product(
-            '애플망고',
-            'https://mblogthumb-phinf.pstatic.net/MjAxODA3MTlfODYg/MDAxNTMxOTY2NzcwMjY0.X8ApKSVn-A4x3gCH2uN88j49_R8FjyEJsxVA27HEVUEg.BlIna4eJbLMf11z8GpSGz7_HmRm-kuYwmGqA8t9UF0gg.JPEG.julyhoho/image_2893740211531966758809.jpg?type=w800',
-            6000,
-            '달달한 AppleMango~'
-        ),
-    ],
-    
-    render() {
-        // console.log('render!!', this);
-        const $app = document.getElementById('app');
-        const $prodList = document.createElement('ul');
-        $prodList.classList.add('product-list');
-        this.products.forEach(prod => {
-            //      {product: {title: '', imageUrl: ''}, render()}
-          const productItem = new ProductItem(prod);
-        //   console.log(productItem);
-
-          $prodList.appendChild(productItem.render());
-        });
-        $app.appendChild($prodList);
-    }
-};
-
 // 렌더링 명령
+const productList = new ProductList();
 productList.render();
