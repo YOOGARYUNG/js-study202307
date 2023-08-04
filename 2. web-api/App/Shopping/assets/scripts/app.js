@@ -1,3 +1,18 @@
+class Dog {
+    constructor(name, age, injection, favorite) {
+      this.name = name;
+      this.age = age;
+      this.injection = injection;
+      this.favorite = favorite;
+    }
+    walkInPark() {
+      console.log(`${this.name}이 산책합니다.`);
+    }
+  }
+  const d1 = new Dog('뽀삐');
+  const d2 = new Dog('초코');
+  d1.walkInPark();
+  d2.walkInPark();
 
 // 하나의 상품 객체에 대한 설계도
 class Product {
@@ -18,6 +33,31 @@ const p2 = new Product('쩝쩝이',
     'https://blog.kakaocdn.net/dn/cSGF4R/btq5h0PUbMx/9RgR2KxK5oEeT9ku9O2xW1/img.png',
     7000, '쩝쩝박사님~ 맛있게 밥을 먹어주세요');
 console.log(p2);
+
+// 한개의 li태그를 생성하는 컴포넌트 클래서 설계
+class ProductItem {
+    constructor (product) {
+        this.product = product;
+    }
+
+    render() {
+        const $prod = document.createElement('li');
+          $prod.classList.add('product-item');
+          $prod.innerHTML = `
+            <div>
+              <img src="${this.product.imageUrl}" alt="${this.product.title}">
+              <div class="product-item__content">
+                <h2>${this.product.title}</h2>
+                <h3>${this.product.price}원</h3>
+                <p>${this.product.description}</p>
+                <button>담기</button>
+              </div>
+            </div>
+          `;
+          return $prod;
+    }
+}
+
 
 // 상품 목록에 대한 객체
 const productList = {
@@ -50,20 +90,11 @@ const productList = {
         const $prodList = document.createElement('ul');
         $prodList.classList.add('product-list');
         this.products.forEach(prod => {
-          const $prod = document.createElement('li');
-          $prod.classList.add('product-item');
-          $prod.innerHTML = `
-            <div>
-              <img src="${prod.imageUrl}" alt="${prod.title}">
-              <div class="product-item__content">
-                <h2>${prod.title}</h2>
-                <h3>${prod.price}원</h3>
-                <p>${prod.description}</p>
-                <button>담기</button>
-              </div>
-            </div>
-          `;
-          $prodList.appendChild($prod);
+            //      {product: {title: '', imageUrl: ''}, render()}
+          const productItem = new ProductItem(prod);
+        //   console.log(productItem);
+
+          $prodList.appendChild(productItem.render());
         });
         $app.appendChild($prodList);
     }
