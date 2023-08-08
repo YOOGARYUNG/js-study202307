@@ -2,9 +2,8 @@
 const $postUl = document.querySelector(".posts");
 
 // form 태그
-const $addForm = document.querySelector('#new-post form');
+const $addForm = document.querySelector("#new-post form");
 // console.log($addForm);
-
 
 // 서버에서 게시물들을 가져와서 화면에 렌더링
 const fetchGetPosts = () => {
@@ -40,59 +39,97 @@ const fetchGetPosts = () => {
     const postList = JSON.parse(xhr.response);
     // console.log(postList[0].title);
 
-    postList.forEach((post) => {
+    postList.forEach(({ id, title, body }) => {
       const $postLi = document.createElement("li");
       $postLi.classList.add("post-item");
+      // li태그에 식별 아이디를 부여
+      $postLi.dataset.postId = id;
       $postLi.innerHTML = `
-      <h2>${post.title}</h2>
-      <p>${post.body}</p>
+      <h2>${title}</h2>
+      <p>${body}</p>
       <button>DELETE</button>
     `;
-
+      
       $postUl.appendChild($postLi);
     });
   };
 };
 
-
 fetchGetPosts();
 
-const fetchNewPost = (e) => {
-    e.preventDefault(); // from의 새로고침 기능 중단
-    console.log('form이 제출됨!');
+const fetchNewPost = () => {
+  // console.log('form이 제출됨!');
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://localhost:5000/posts')
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", "http://localhost:5000/posts");
 
-    const payload = JSON.stringify({
-        title: document.getElementById('title').value,
-        body: document.getElementById('content').value
-    });
+  const payload = JSON.stringify({
+    title: document.getElementById("title").value,
+    body: document.getElementById("content").value,
+  });
 
-    xhr.setRequestHeader('content-type', 'application/json');
-    xhr.send(payload);
+  xhr.setRequestHeader("content-type", "application/json");
+  xhr.send(payload);
 
-    // 응답 상황 처리
-    xhr.onload = e => {
-        if (xhr.status === 200 || xhr.status === 201) {
-            alert('게시물 등록 성공!');
-        } else {
-            alert('게시물 등록 실패!');
-        }
-    };
+  // 응답 상황 처리
+  xhr.onload = (e) => {
+    if (xhr.status === 200 || xhr.status === 201) {
+      alert("게시물 등록 성공!");
+    } else {
+      alert("게시물 등록 실패");
+    }
+  };
 };
 
 // 폼태그 전송 이벤트 등록
-$addForm.addEventListener('submit', fetchNewPost);
+$addForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  fetchNewPost();
+});
 
-document.getElementById('go-link').addEventListener('click', e => {
+// 서버에 삭제요청을 보내는 함수
+const fetchDelete = (id) => {
+  const xhr = new XMLHttpRequest();
+  xhr.open('DELETE', `http://localhost:5000/posts/${id}`);
 
-  const flag = confirm('진짜 이동합니까?');
+  xhr.send();
+
+  // 응답 처리
+  xhr.onload = () => {
+    if (xhr.status === 200) {
+      alert('삭제 성공!');
+    } else {
+      alert('삭제 실패!');
+    }
+  };
+};
+
+// 삭제 클릭하면 벌어질 일들에 대한 함수
+const deletePostHandler = e => {
+  if (!e.target.matches('button')) return;
+  
+  // 삭제 클릭 대상 아이디 잡아오기
+  console.log('삭제 클릭!');
+  const id = e.target.closest('.post-item').dataset.postId;
+  fetchDelete(id);
+};
+
+// 삭제 이벤트 등록
+$postUl.addEventListener('click', deletePostHandler);
+
+
+
+
+
+/*
+document.getElementById("go-link").addEventListener("click", (e) => {
+  const flag = confirm("진짜 이동합니까?");
   if (!flag) {
-    console.log('넌 못가~');
+    console.log("넌 못가~");
     e.preventDefault(); // 태그의 기본 기능을 없앰
     // 기본 기능: a -> 링크이동 기능
     //            checkbox -> 체크기능
     //            form -> 서버에 데이터를 주면서 새로고침
   }
 });
+*/
