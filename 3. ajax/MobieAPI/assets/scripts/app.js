@@ -70,6 +70,8 @@ $addBtn.addEventListener('click', addTodoHandler);
 // step2. 할 일 삭제 기능 
 const deleteTodoHandler = e => {
   if (!e.target.matches('.remove span')) return;
+
+  if (!confirm('진짜로 삭제합니까??')) return;
   // console.log('삭제 클릭!');
   // 특정 할일을 지우기 위해 클릭한 할일의 id값을 알아야 함
   const id = e.target.closest('.todo-list-item').dataset.id
@@ -87,6 +89,24 @@ const deleteTodoHandler = e => {
 };
 
 $todoList.addEventListener('click', deleteTodoHandler);
+
+// step4. 할 일 완료 체크 처리
+const checkTodoHandler = e => {
+  // console.log('체크박스 누름', e.target);
+
+  // 1. 서버에 수정요청 보내서 누른 그 할일의 
+  //    done을 반대값으로 수정해야 함.
+  // 1-1. 현재 체크삾인 t, f인지 알아야 반대로 바꿀수 있음
+  console.log(e.target.checked); // 현재상태지 이전상태가 아니다
+
+  const id = e.target.closest('.todo-list-item').dataset.id
+  fetchTodos(`${URL}/${id}`, 'PATCH', {
+    done: e.target.checked
+  });
+};
+
+$todoList.addEventListener('change', checkTodoHandler);
+
 
 
 // =========== 앱 실행 =========== //

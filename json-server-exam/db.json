@@ -31,12 +31,12 @@
     {
       "id": 1,
       "text": "저녁 요리하기",
-      "done": false
+      "done": true
     },
     {
       "id": 2,
       "text": "뉴스 기사 보기",
-      "done": true
+      "done": false
     },
     {
       "id": 3,
