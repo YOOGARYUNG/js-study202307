@@ -31,7 +31,7 @@
     {
       "id": 1,
       "text": "저녁 요리하기",
-      "done": true
+      "done": false
     },
     {
       "id": 2,
