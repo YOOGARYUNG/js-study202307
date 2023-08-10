@@ -1,0 +1,47 @@
+{
+  "posts": [
+    {
+      "title": "하하호호",
+      "body": "ㅋㅋㅋㅋ",
+      "id": 1
+    },
+    {
+      "title": "꾸꾸까까",
+      "body": "ㅎㅎㅎㅎ",
+      "id": 2
+    },
+    {
+      "title": "룰루랄라",
+      "body": "ㅋㅎㅋㅎ",
+      "id": 3
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "userName": "김철수"
+    },
+    {
+      "id": 2,
+      "userName": "뽀로로"
+    }
+  ],
+  "followers": [],
+  "todos": [
+    {
+      "id": 1,
+      "text": "저녁 요리하기",
+      "done": false
+    },
+    {
+      "id": 2,
+      "text": "뉴스 기사 ",
+      "done": false
+    },
+    {
+      "id": 3,
+      "text": "자바스크립트 공부하기",
+      "done": false
+    }
+  ]
+}
